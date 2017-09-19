@@ -17,5 +17,6 @@ do
   shift
 done
 
-nextflow run MaxUlysse/compile-beamer --tex MGarcia-20170829-FocusMeeting.tex -profile $PROFILE
-nextflow run MaxUlysse/compile-beamer --tex MGarcia-20170920-DNAClub.tex -profile $PROFILE
+for i in `ls -1 *.tex` ; do
+  nextflow run MaxUlysse/compile-beamer -profile $PROFILE --tex $i
+done
