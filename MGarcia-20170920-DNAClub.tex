@@ -10,6 +10,9 @@
 % For nice verbatim
 \RequirePackage{minted}
 
+% For captions
+\RequirePackage{caption}
+
 % Arrange theme
 \usetheme[
 	progressbar=frametitle,
@@ -24,9 +27,9 @@
 
 \author{Maxime Garcia}
 \date{2017-20-09}
-\title{Cancer Analysis Workflow}
+\title{DNA Club}
 \titlegraphic{\hfill\includegraphics[height=1cm]{pictures/CAW}}
-\subtitle{Yes we can run it on Irma/Bianca with Singularity containers}
+\subtitle{Using CAW with Singularity containers on UPPMAX clusters}
 \institute{% Don't forget logos
 	\vfill
 	\includegraphics[height=.7cm]{pictures/SciLifeLab}
@@ -53,43 +56,58 @@
 \section{Singularity}
 
 \begin{frame}{What is Singularity?}
-	\vspace{-2cm}
-	\center{\includegraphics[height=2cm]{pictures/singularity.png}}
+	\begin{center}
+		\includegraphics[height=2cm]{pictures/singularity.png}
+		\captionof*{figure}{http://singularity.lbl.gov/\\https://singularity-hub.org/}
+
+	\end{center}
 	\begin{itemize}
 		\item Docker-like containers technology
 		\item Specific for HPC environnment
 		\pause
 		\item Without the root user security problem
 		\pause
-		\item Supported by Nextflow
+		\item Singularity hub offers a Docker hub like repository
+		\item Singularity containers can be pulled from Docker hub
 		\pause
-		\item Can pull containers from Docker-hub
+		\item Supported by Nextflow
 	\end{itemize}
 \end{frame}
 
 \section{Motivation}
 
-\begin{frame}{Why would we want to do that?}
+\begin{frame}{Why would we want to use that?}
 	\begin{itemize}
 		\item For a better control
 		\pause
+		\begin{itemize}
 			\item of every tool used
 			\item of every version used
+		\end{itemize}
 		\pause
 		\item For a better reproducibility
 		\pause
-			\item Containerization is reproducible and portable
 	\end{itemize}
+	Containerization is not only portable but also reproducible.
 \end{frame}
 
 \begin{frame}{We can do everything!}
-	\center{\includegraphics[height=7.5cm]{pictures/Penguin-meme.jpg}}
+	\center{\includegraphics[height=7.5cm]{pictures/Penguin-meme.png}}
 \end{frame}
 
 \section{CAW-containers}
 
 \begin{frame}{The CAW-containers repository}
 	\center{\includegraphics[height=7.5cm]{pictures/CAW-containers.png}}
+\end{frame}
+
+\begin{frame}{How many containers?}
+	\begin{itemize}
+		\pause
+		\item One container for everything
+		\pause
+		\item Several containers (one for each process)
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{The One Script}
@@ -230,22 +248,23 @@ nextflow run ~/CAW/main.nf --project project --step preprocessing \
 	language: java
 	jdk: openjdk8
 	services:
-	  - docker
+		- docker
 	env:
-	  - NXF_VER=0.25.6 SGT_VER=2.3.1 TEST=ANNOTATE PROFILE=singularityTest TOOL_INSTALL=all
-	  - NXF_VER=0.25.6 TEST=ANNOTATE PROFILE=dockerTest TOOL_INSTALL=nextflow
-	  - NXF_VER=0.25.6 SGT_VER=2.3.1 TEST=RECALIBRATE PROFILE=singularityTest TOOL_INSTALL=all
-	  - NXF_VER=0.25.6 TEST=RECALIBRATE PROFILE=dockerTest TOOL_INSTALL=nextflow
-	  - NXF_VER=0.25.6 SGT_VER=2.3.1 TEST=REALIGN PROFILE=singularityTest TOOL_INSTALL=all
-	  - NXF_VER=0.25.6 TEST=REALIGN PROFILE=dockerTest TOOL_INSTALL=nextflow
-	  - NXF_VER=0.25.6 SGT_VER=2.3.1 TEST=MAPPING PROFILE=singularityTest TOOL_INSTALL=all
-	  - NXF_VER=0.25.6 TEST=MAPPING PROFILE=dockerTest TOOL_INSTALL=nextflow
+		- NXF_VER=0.25.6 PROFILE=dockerTest TEST=ANNOTATEVEP TOOL_INSTALL=nextflow
+		- NXF_VER=0.25.6 SGT_VER=2.3.1 PROFILE=singularityTest TEST=ANNOTATESNPEFF TOOL_INSTALL=all
+		- NXF_VER=0.25.6 PROFILE=dockerTest TEST=ANNOTATESNPEFF TOOL_INSTALL=nextflow
+		- NXF_VER=0.25.6 SGT_VER=2.3.1 PROFILE=singularityTest TEST=RECALIBRATE TOOL_INSTALL=all
+		- NXF_VER=0.25.6 PROFILE=dockerTest TEST=RECALIBRATE TOOL_INSTALL=nextflow
+		- NXF_VER=0.25.6 SGT_VER=2.3.1 PROFILE=singularityTest TEST=REALIGN TOOL_INSTALL=all
+		- NXF_VER=0.25.6 PROFILE=dockerTest TEST=REALIGN TOOL_INSTALL=nextflow
+		- NXF_VER=0.25.6 SGT_VER=2.3.1 PROFILE=singularityTest TEST=MAPPING TOOL_INSTALL=all
+		- NXF_VER=0.25.6 PROFILE=dockerTest TEST=MAPPING TOOL_INSTALL=nextflow
 
 	install: # Install Nextflow (and Singularity if needed)
-	  - "./scripts/install.sh --tool $TOOL_INSTALL"
+		- "./scripts/install.sh --tool $TOOL_INSTALL"
 
 	script:
-	  - "./scripts/test.sh --profile $PROFILE --test $TEST"
+		- "./scripts/test.sh --profile $PROFILE --test $TEST"
 \end{minted}
 \end{frame}
 
