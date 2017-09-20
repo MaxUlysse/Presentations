@@ -2,7 +2,7 @@
 
 [![Licence][licence-badge]][licence-link] [![Nextflow version][nextflow-badge]][nextflow-link] [![Travis status][travis-badge]][travis-link] [![works on my machine][works-badge]][works-link]
 
-My own presentations compiled with compile-beamer.
+My own presentations made with [compile-beamer](https://github.com/MaxUlysse/compile-beamer).
 
 example:
 - `nextflow run MaxUlysse/compile-beamer --tex MGarcia-20170829-FocusMeeting.tex -profile singularity`
