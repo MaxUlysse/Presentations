@@ -10,7 +10,7 @@ example:
 
 [licence-badge]: https://img.shields.io/github/license/MaxUlysse/Presentations.svg
 [licence-link]: https://github.com/MaxUlysse/Presentations/blob/master/LICENSE
-[nextflow-badge]: https://img.shields.io/badge/nextflow-%E2%89%A50.25.6-brightgreen.svg
+[nextflow-badge]: https://img.shields.io/badge/nextflow-%E2%89%A50.25.0-brightgreen.svg
 [nextflow-link]: https://www.nextflow.io/
 [travis-badge]: https://api.travis-ci.org/MaxUlysse/Presentations.svg
 [travis-link]: https://travis-ci.org/MaxUlysse/Presentations
