@@ -1,0 +1,255 @@
+%!TEX program = xelatex
+% \documentclass[notes]{beamer}
+% \documentclass[notes=only]{beamer}
+\documentclass{beamer}
+
+% Correct the path when including svg pictures
+\RequirePackage{import}
+
+% To resize graphic and table
+\RequirePackage{graphics}
+
+% For nice verbatim
+\RequirePackage{minted}
+
+% For captions
+\RequirePackage{caption}
+
+% Arrange theme
+\usetheme[
+	progressbar=frametitle,
+	sectionpage=none,
+	numbering=fraction
+]{metropolis}
+
+% Color the progress:
+% - green for SciLifeLab
+% - violet for KI
+\setbeamercolor{progress bar}{fg=green,bg=white}
+
+\author{Maxime Garcia}
+\date{2017-09-27}
+\title{CAW 1.1 review}
+\titlegraphic{\hfill\includegraphics[height=1cm]{pictures/CAW}}
+\subtitle{}
+\institute{% Don't forget logos
+	\vfill
+	\includegraphics[height=.7cm]{pictures/SciLifeLab}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/NGI}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/NBIS}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/KI}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/KTH}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/SU}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/UU}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/Barntumorbanken}
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Agenda}
+
+\begin{frame}{Today's agenda}
+	\begin{itemize}
+		\item News about CAW:
+		\pause
+		\begin{itemize}
+			\item Singularity containers are now being used by default
+			\item Tools are being updated
+			\pause
+			\item The arrival of an NBIS long-term support grant for BTB
+			\pause
+			\item What has already been analyzed
+			\pause
+			\item Manuscript status
+		\end{itemize}
+		\pause
+		\item First clinical case with CAW
+		\pause
+		\item Discussions about what to do next
+		\pause
+		\item Bugs report
+	\end{itemize}
+\end{frame}
+
+\section{Singularity}
+
+\begin{frame}{What is Singularity?}
+	\begin{center}
+		\includegraphics[height=2cm]{pictures/singularity.png}
+		\captionof*{figure}{http://singularity.lbl.gov/\\https://singularity-hub.org/}
+	\end{center}
+	\begin{itemize}
+		\item Docker-like containers technology
+		\item Specific for HPC environnment
+		\pause
+		\item Supported by Nextflow
+	\end{itemize}
+\end{frame}
+
+\section{Containerization}
+
+\begin{frame}{Why would we want to use that?}
+	\begin{itemize}
+		\item For a better control
+		\pause
+		\begin{itemize}
+			\item of every tool used
+			\item of every version used
+		\end{itemize}
+		\pause
+		\item For a better reproducibility
+		\pause
+	\end{itemize}
+	Containerization is not only portable but also reproducible.
+\end{frame}
+
+\begin{frame}{We can do everything!}
+	\center{\includegraphics[height=7.5cm]{pictures/Penguin-meme.png}}
+\end{frame}
+
+\section{Updating tools}
+
+\begin{frame}{We do not rely on UPPMAX modules anymore}
+	\begin{itemize}
+		\item Tools already updated
+		\pause
+		\begin{itemize}
+			\item Manta: 1.0.3 -> 1.1.1
+			\item Strelka: 1.0.15 -> 2.8.2
+		\end{itemize}
+		\pause
+		\item What was gained?
+		\pause
+		\begin{itemize}
+			\item Manta: Single Diploid Sample + Tumor-Only Analysis
+			\item Strelka: Germline variants + Manta's candidate indels supplied as input to Strelka
+		\end{itemize}
+	\end{itemize}
+	We're currently updating every other tools in our containers.
+\end{frame}
+
+\section{NBIS support}
+
+\begin{frame}{NBIS long-term support grant for BTB}
+	\begin{center}
+		\includegraphics[height=2cm]{pictures/NBIS}
+	\end{center}
+	\begin{itemize}
+		\item Markus Mayrhofer \& Markus Ringnér
+	\end{itemize}
+\end{frame}
+
+\section{What has already been analyzed}
+
+\begin{frame}{Switch to Szilva's presentation}
+	\begin{itemize}
+		\item Szilva's slides
+	\end{itemize}
+\end{frame}
+
+\section{Manuscript Status}
+
+\begin{frame}{Where we are right now}
+	\begin{itemize}
+		\item What we have
+		\item What we need
+		\item What we are working on
+	\end{itemize}
+\end{frame}
+
+\section{First Clinical Case}
+
+\begin{frame}{Switch to Teresita's presentation}
+	\begin{itemize}
+		\item Teresita's slides
+	\end{itemize}
+\end{frame}
+
+\section{Discussion}
+
+\begin{frame}{What do we have now?}
+	CAW 1.1
+	\begin{itemize}
+		\item From FASTQ to annotated VCF
+		\pause
+		\item A core set of Variant Callers:
+		\begin{itemize}
+			\item MuTect1, MuTect2
+			\item HaplotypeCaller, Freebayes
+			\item Strelka, Manta, Ascat
+		\end{itemize}
+		\pause
+		\item VEP and snpEFF for annotation
+		\pause
+		\item Rely on UPPMAX modules
+		\pause
+		\item Singularity support
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{In preparation}
+	CAW 1.2
+	\begin{itemize}
+		\item Singularity support
+		\item Up to date tools
+		\item Add Control-FREEC
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{What to do next?}
+	\begin{itemize}
+		\item Scout
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Bugs report}
+\end{frame}
+
+\section{Acknowledgments}
+
+\begin{frame}{The List of People Involved}
+	\begin{table}
+		\resizebox{.8\textwidth}{!}{%
+		\begin{tabular}{ll}
+			Sebastian DiLorenzo &	Monica Nistèr \\
+			Jesper Eisfeldt 		&	Björn Nystedt \\
+			Maxime Garcia 			&	Pall Olason \\
+			Szilveszter Juhos 	&	Markus Ringnér \\
+			Max Käller 					&	Pelin Sahlén \\
+			Malin Larsson 			&	Johanna Sandgren \\
+			Marcel Martin 			&	Teresita Díaz De Ståhl \\
+			Markus Mayrhofer		& \\
+		\end{tabular}}
+	\end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Where to find us?}
+	\begin{itemize}
+		\item We are on the SciLifeLab Slack
+		\mint[fontsize=\small]{html}|#cancer-pipeline|
+		\pause
+		\item We have a gitter channel
+		\mint[fontsize=\small]{html}|https://gitter.im/SciLifeLab/CAW|
+		\pause
+		\item Our code is hosted on Github
+		\mint[fontsize=\small]{html}|https://github.com/SciLifeLab/CAW|
+	\end{itemize}
+\end{frame}
+
+\usebackgroundtemplate{
+	\includegraphics[width=\paperwidth]{pictures/SciLifelab-BlueSky.jpg}
+}
+
+\begin{frame}[plain,noframenumbering]{Any questions?}
+\end{frame}
+
+\end{document}
