@@ -2,11 +2,11 @@
 
 [![License][license-badge]][license-link] [![Nextflow version][nextflow-badge]][nextflow-link] [![Travis status][travis-badge]][travis-link] [![works on my machine][works-badge]][works-link]
 
-My own presentations made with [compile-beamer](https://github.com/MaxUlysse/compile-beamer).
+My own presentations made with [compile-latex](https://github.com/MaxUlysse/compile-latex).
 
 example:
-- `nextflow run MaxUlysse/compile-beamer --tex MGarcia-20170829-FocusMeeting.tex -profile singularity`
-- `nextflow run MaxUlysse/compile-beamer --tex MGarcia-20170920-DNAClub.tex -profile docker`
+- `nextflow run MaxUlysse/compile-latex --tex MGarcia-20170829-FocusMeeting.tex`
+- `nextflow run MaxUlysse/compile-latex --tex MGarcia-20170920-DNAClub.tex`
 
 [license-badge]: https://img.shields.io/github/license/MaxUlysse/Presentations.svg
 [license-link]: https://github.com/MaxUlysse/Presentations/blob/master/LICENSE
