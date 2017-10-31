@@ -1,0 +1,209 @@
+%!TEX program = xelatex
+
+% \documentclass[notes]{beamer}
+% \documentclass[notes=only]{beamer}
+\documentclass{beamer}
+
+% Good bibliography
+\RequirePackage[backend=biber]{biblatex}
+\addbibresource[datatype=bibtex]{biblio.bib}
+
+% Icon Fonts
+\RequirePackage{academicons}
+\RequirePackage{fontawesome}
+
+% Correct the path when including svg pictures
+\RequirePackage{import}
+
+% For nice verbatim
+\RequirePackage{minted}
+
+% To resize graphic and table
+\RequirePackage{graphics}
+
+% For captions
+\RequirePackage{caption}
+
+% Arrange theme
+\usetheme[
+	progressbar=frametitle,
+	sectionpage=none,
+	numbering=fraction
+]{metropolis}
+
+% Color the progress:
+% - green for SciLifeLab
+% - violet for KI
+\setbeamercolor{progress bar}{fg=green,bg=white}
+
+\author{Maxime Garcia\\ \faTwitter\ @gau\\ \faGithub\ @MaxUlysse\\ \faGlobe\ https://maxulysse.github.io/}
+\date{2017-10-06}
+\title{Another talk about CAW?}
+\titlegraphic{\hfill\includegraphics[height=1cm]{pictures/CAW}}
+\subtitle{NGI Stockholm CAWterly meeting}
+\institute{SciLifeLab NGI / BarnTumörBanken\\ % Don't forget logos
+	\vfill
+	\includegraphics[height=.7cm]{pictures/SciLifeLab}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/NGI}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/NBIS}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/KI}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/KTH}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/SU}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/UU}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/Barntumorbanken}
+}
+
+\begin{document}
+
+\maketitle
+
+\section{CAW}
+
+\begin{frame}{What is CAW?}
+	\begin{center}
+		\includegraphics[height=7cm]{pictures/Definition.png}<1>
+	\end{center}
+	\pause
+	\begin{center}
+		\includegraphics[height=1cm]{pictures/CAW}<2->
+		\captionof*{figure}{http://opensource.scilifelab.se/projects/caw/}
+	\end{center}
+	\pause
+	\begin{itemize}
+		\item<3-> Pipeline developed at NGI
+		\item<4-> In collaboration with NBIS
+		\item<5-> Support of The Swedish Pediatric Tumor Biobank
+	\end{itemize}
+	\begin{center}
+		\includegraphics[height=1cm]{pictures/NGI}<3->
+		\only<3->{\hfill}
+		\includegraphics[height=1cm]{pictures/Barntumorbanken}<5->
+		\only<4->{\hfill}
+		\includegraphics[height=1cm]{pictures/NBIS}<4->
+	\end{center}
+\end{frame}
+
+\begin{frame}{What does CAW do?}
+	\begin{center}
+		\includegraphics[height=1cm]{pictures/CAW}
+		\captionof*{figure}{http://opensource.scilifelab.se/projects/caw/}
+	\end{center}
+	\pause
+	\begin{itemize}
+		\item Tumor/Normal pair WGS analysis
+		\pause
+		\item Based on GATK best practices for processing FASTQ files
+		\pause
+		\item<4> MuTect1, MuTect2, Strelka, and GATK HaplotyeCaller
+		\item<5-> SNPs, SNVs and indels
+		\pause
+		\item<6> Manta
+		\item<7-> Structural variants
+		\pause
+		\item<8> ASCAT
+		\item<9-> Heterogeneity, ploidy and CNVs
+	\end{itemize}
+\end{frame}
+
+\section{Singularity}
+
+\begin{frame}{Using Singularity}
+	\begin{center}
+		\includegraphics[height=2cm]{pictures/singularity.png}
+		\captionof*{figure}{http://singularity.lbl.gov/\\https://singularity-hub.org/}
+	\end{center}
+	\begin{itemize}
+		\item Docker-like containers technology
+		\item Specific for HPC environnment
+		\pause
+		\item Supported by Nextflow
+		\pause
+		\item Better reproducibility
+		\item Better shareability
+		\pause
+	\end{itemize}
+	Containerization is not only portable but also reproducible.
+\end{frame}
+
+\section{Is there more?}
+
+\begin{frame}{Can CAW do more?}
+	\only<1>{\center{\includegraphics[height=7.5cm]{pictures/helicopter.png}}}
+	\only<5>{\center{\includegraphics[height=8cm]{pictures/Wonka-meme.png}}}
+	\pause
+	\begin{itemize}
+		\item Start from FASTQ files
+		\item More or less processed BAM files
+		\item Annotations with snpEff and/or VEP
+		\item Reports with MultiQC
+		\pause
+		\item Choose between GRCh37 or GRCh38
+		\pause
+		\item We can also process normal only samples
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{CAW to replace Piper into production}
+	\begin{center}
+		\only<1-2>{\includegraphics[height=1cm]{pictures/Piper.png}}
+		\only<3->{\includegraphics[height=1cm]{pictures/CAW}}
+	\end{center}
+	\begin{itemize}
+		\item Kick of meeting was 2017-10-04
+		\pause
+		\item Normal only processing of samples
+		\pause
+		\item Handles GRCh38 and GRCh37
+		\pause
+		\item Faster than Piper
+		\pause
+		\item Has already been use to process the 1000 samples from SweGen
+	\end{itemize}
+\end{frame}
+
+\section{Acknowledgments}
+
+\begin{frame}{The List of People Involved}
+	\begin{table}
+		\resizebox{.8\textwidth}{!}{%
+		\begin{tabular}{ll}
+			Sebastian DiLorenzo &	Monica Nistèr \\
+			Jesper Eisfeldt 		&	Björn Nystedt \\
+			Maxime Garcia 			&	Pall Olason \\
+			Szilveszter Juhos 	&	Markus Ringnér \\
+			Max Käller 					&	Pelin Sahlén \\
+			Malin Larsson 			&	Johanna Sandgren \\
+			Marcel Martin 			&	Teresita Díaz De Ståhl \\
+			Markus Mayrhofer		& \\
+		\end{tabular}}
+	\end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Where to find us?}
+	\begin{itemize}
+		\item We are on the SciLifeLab Slack
+		\faSlack \mint[fontsize=\small]{html}|#cancer-pipeline|
+		\pause
+		\item We have a gitter channel
+		\ \mint[fontsize=\small]{html}|https://gitter.im/SciLifeLab/CAW|
+		\pause
+		\item Our code is hosted on Github
+		\faGithub \mint[fontsize=\small]{html}|https://github.com/SciLifeLab/CAW|
+	\end{itemize}
+\end{frame}
+
+\usebackgroundtemplate{
+	\includegraphics[width=\paperwidth]{pictures/SciLifelab-BlueSky.jpg}
+}
+
+\begin{frame}[plain,noframenumbering]{Any questions?}
+\end{frame}
+
+\end{document}
