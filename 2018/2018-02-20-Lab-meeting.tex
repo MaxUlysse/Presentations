@@ -1,0 +1,259 @@
+%!TEX program = xelatex
+
+% \documentclass[notes]{beamer}
+% \documentclass[notes=only]{beamer}
+\documentclass{beamer}
+
+% Good bibliography
+\RequirePackage[backend=biber]{biblatex}
+\addbibresource[datatype=bibtex]{biblio.bib}
+
+% Icon Fonts
+\RequirePackage{academicons}
+\RequirePackage{fontawesome}
+
+% Correct the path when including svg pictures
+\RequirePackage{import}
+
+% For nice verbatim
+\RequirePackage{minted}
+
+% To resize graphic and table
+\RequirePackage{graphics}
+
+% For captions
+\RequirePackage{caption}
+
+% Arrange theme
+\usetheme[
+	progressbar=frametitle,
+	sectionpage=none,
+	numbering=fraction
+]{metropolis}
+
+% Color the progress:
+% - green for SciLifeLab
+% - violet for KI
+\setbeamercolor{progress bar}{fg=violet,bg=white}
+
+\author{Maxime Garcia\\ \faTwitter\ @gau\\ \faGithub\ @MaxUlysse\\ \faGlobe\ https://maxulysse.github.io/}
+\date{2018-02-20}
+\title{Latest news about Sarek}
+\titlegraphic{\hfill\includegraphics[height=1cm]{pictures/Sarek_no_border}}
+\subtitle{Formerly known as CAW}
+\institute{SciLifeLab NGI / BarnTumörBanken\\ % Don't forget logos
+	\vfill
+	\includegraphics[height=.7cm]{pictures/SciLifeLab}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/NGI}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/NBIS}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/KI}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/KTH}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/SU}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/UU}
+	\hfill
+	\includegraphics[height=.7cm]{pictures/Barntumorbanken}
+}
+
+\begin{document}
+
+\maketitle
+
+\section{From CAW to Sarek}
+
+\begin{frame}{CAW}
+	\begin{center}
+		\includegraphics[height=7cm]{pictures/Definition.png}
+		\captionof*{figure}{What happens when you look for CAW}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Sarek}
+	\begin{center}
+		\includegraphics[height=7cm]{pictures/Sarek_discovery.jpg}
+		\captionof*{figure}{James Frain as Sarek, "Star Trek: Discovery"}
+	\end{center}
+\end{frame}
+
+\begin{frame}{The real inspiration}
+	\begin{center}
+		\includegraphics[height=7cm]{pictures/Skierfe-summer.jpg}
+		\captionof*{figure}{Mount Skierfe in the Sarek National Park in Summer}
+	\end{center}
+\end{frame}
+
+\begin{frame}{How it should look today}
+	\begin{center}
+		\includegraphics[height=4cm]{pictures/Skierfe-winter.jpg}
+		\captionof*{figure}{Mount Skierfe in Winter}
+	\end{center}
+\end{frame}
+
+\begin{frame}{What is Sarek?}
+	\vfill
+	\begin{center}
+		\includegraphics[height=1cm]{pictures/Sarek_no_border}
+		\captionof*{figure}{\faGlobe\ http://opensource.scilifelab.se/projects/sarek/}
+	\end{center}
+	\begin{itemize}
+		\pause
+		\item Nextflow pipeline
+		\item<3-> Developed at NGI
+		\item<4-> In collaboration with NBIS
+		\item<5-> Support of The Swedish Pediatric Tumor Biobank
+	\end{itemize}
+	\begin{center}
+		\includegraphics[height=1cm]{pictures/NGI}<3->
+		\only<3->{\hfill}
+		\includegraphics[height=1cm]{pictures/Barntumorbanken}<5->
+		\only<4->{\hfill}
+		\includegraphics[height=1cm]{pictures/NBIS}<4->
+	\end{center}
+	\vfill
+\end{frame}
+
+\begin{frame}{What does Sarek do?}
+	\begin{center}
+		\includegraphics[height=1cm]{pictures/Sarek}
+	\end{center}
+	\pause
+	\begin{center}
+		\includegraphics[height=1cm]{pictures/Sarek_germline}
+	\end{center}
+	\pause
+	\begin{center}
+		\includegraphics[height=1cm]{pictures/Sarek_somatic}
+	\end{center}
+\end{frame}
+
+\begin{frame}{What does Sarek do?}
+	\begin{center}
+		\includegraphics[height=1cm]{pictures/Sarek_no_border}
+	\end{center}
+	\pause
+	\begin{itemize}
+		\item WGS analysis (Tumor/Normal pair or Germline)
+		\pause
+		\item Handles both GRCh37 and GRCh38
+		\pause
+		\item Based on GATK best practices for processing FASTQ files
+		\pause
+		\item<5-> SNPs, SNVs and indels
+		\begin{itemize}
+			\item<6-> MuTect1, MuTect2, Strelka, and GATK HaplotyeCaller
+		\end{itemize}
+		\pause
+		\item<7-> Structural variants
+		\begin{itemize}
+			\item<8-> Manta
+		\end{itemize}
+		\pause
+		\item<9-> Heterogeneity, ploidy and CNVs
+		\begin{itemize}
+			\item<10-> ASCAT
+		\end{itemize}
+		\pause
+		\item<11-> Containers (portable, reproducible)
+		\begin{itemize}
+			\item<12-> Docker or Singularity
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\section{Is there more?}
+
+\begin{frame}{Where to use Sarek?}
+	\begin{center}
+		\only<2-4>{\includegraphics[height=2cm]{pictures/uppmax.png}}
+		\only<5>{\includegraphics[height=3cm]{pictures/AWS.png}}
+		\only<6>{\includegraphics[height=8cm]{pictures/Wonka-meme.png}}
+	\end{center}
+	\begin{itemize}
+		\item<1> Any POSIX compatible system
+		\pause
+		\item<-4> Rackham
+		\pause
+		\item<-4> Bianca
+		\pause
+		\item<-4> Irma
+		\item<5> AWS Batch
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Sarek with AWS Batch}
+	\begin{center}
+		\includegraphics[height=2cm]{pictures/Batch.png}
+	\end{center}
+	\pause
+	\begin{itemize}
+		\item A single command line
+	\end{itemize}
+	\begin{minted}[fontsize=\scriptsize]{bash}
+nextflow run main.nf -profile awsbatch -w s3://caw-test-results/work \
+--genome smallGRCh37 --sample s3://caw-test-data/tsv/tiny-s3.tsv \
+--outDir s3://caw-test-results/Results
+	\end{minted}
+	\pause
+	\footnotesize
+	\faGlobe\ https://maxulysse.github.io/2017/11/16/Running-CAW-with-AWS-Batch/
+\end{frame}
+
+\begin{frame}{Going further}
+	\begin{center}
+		\includegraphics[height=2cm]{pictures/Batch.png}
+	\end{center}
+	\begin{itemize}
+		\item Run a full size test sample
+		\pause
+		\item Gather reports
+		\pause
+		\item Get a pricing
+		\pause
+		\item Wait for Amazon to finally come to Stockholm
+	\end{itemize}
+\end{frame}
+
+\section{Acknowledgments}
+
+\begin{frame}{The List of People Involved}
+	\begin{table}
+		\resizebox{.8\textwidth}{!}{%
+		\begin{tabular}{ll}
+			Sebastian DiLorenzo &	Markus Mayrhofer \\
+			Jesper Eisfeldt 		&	Monica Nistèr \\
+			Phil Ewels					& Björn Nystedt \\
+			Maxime Garcia 			&	Pall Olason \\
+			Szilveszter Juhos 	&	Markus Ringnér \\
+			Max Käller 					&	Pelin Sahlén \\
+			Malin Larsson 			&	Johanna Sandgren \\
+			Marcel Martin 			&	Teresita Díaz De Ståhl \\
+		\end{tabular}}
+	\end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Where to find us?}
+	\begin{itemize}
+		\item We are on the SciLifeLab Slack
+		\faSlack \mint[fontsize=\small]{html}|#cancer-pipeline|
+		\pause
+		\item We have a gitter channel
+		\mint[fontsize=\small]{html}|https://gitter.im/SciLifeLab/Sarek|
+		\pause
+		\item Our code is hosted on Github
+		\faGithub \mint[fontsize=\small]{html}|https://github.com/SciLifeLab/Sarek|
+	\end{itemize}
+\end{frame}
+
+\usebackgroundtemplate{
+	\includegraphics[width=\paperwidth]{pictures/SciLifelab-BlueSky.jpg}
+}
+
+\begin{frame}[plain,noframenumbering]{Any questions?}
+\end{frame}
+
+\end{document}
