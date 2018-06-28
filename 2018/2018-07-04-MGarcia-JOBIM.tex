@@ -1,0 +1,97 @@
+%!TEX program = xelatex
+
+% \documentclass[notes]{beamer}
+% \documentclass[notes=only]{beamer}
+\documentclass[usepdftitle=false]{beamer}
+
+% Good bibliography
+\RequirePackage[backend=biber]{biblatex}
+\addbibresource[datatype=bibtex]{biblio.bib}
+
+\RequirePackage{hyperref}
+
+\hypersetup{
+	pdftitle			= {Sarek, a portable workflow for WGS analysis of germline and somatic mutations},
+	pdfsubject		= {Presentation at JOBIM 2018},
+	pdfkeywords		= {Somatic, Germline, Variations, Cancer, Workflow, Container, Reproducibility, Nextflow, Pipeline, Singularity, Docker, Genomics},
+	pdfauthor			= {Maxime U. Garcia},
+	pdfcreator		= {\LaTeX},
+	pdfproducer		= {XeTeX 3.14159265-2.6-0.99996}}
+
+% Icon Fonts
+\RequirePackage{academicons}
+\RequirePackage{fontawesome}
+
+% Correct the path when including svg pictures
+\RequirePackage{import}
+
+% For nice verbatim
+\RequirePackage{minted}
+
+% To resize graphic and table
+\RequirePackage{graphics}
+
+% For captions
+\RequirePackage{caption}
+
+% Arrange theme
+\usetheme[
+	progressbar=frametitle,
+	sectionpage=none,
+	numbering=fraction
+]{metropolis}
+
+\makeatletter
+	\setlength{\metropolis@titleseparator@linewidth}{1pt}
+	\setlength{\metropolis@progressonsectionpage@linewidth}{2pt}
+	\setlength{\metropolis@progressinheadfoot@linewidth}{2pt}
+\makeatother
+
+% Color the progress:
+% - SciLifeLabGreen (#7FCB28) for SciLifeLab
+% - violet for KI
+\definecolor{SciLifeLabGreen}{HTML}{7FCB28}
+\setbeamercolor{progress bar}{fg=SciLifeLabGreen,bg=white}
+
+\title{%
+	\vspace{-.8cm}%
+	Sarek
+}
+
+\subtitle{%
+	\normalsize{A portable workflow for WGS analysis\\of germline and somatic mutations}%
+	\vspace{-.4cm}%
+}
+
+\titlegraphic{
+	\hfill\includegraphics[height=.8cm]{pictures/SciLifeLab-white}%
+	\vspace{.3cm}%
+
+	\hfill\includegraphics[height=.8cm]{pictures/NGI-white}%
+	\vspace{.5cm}%
+
+	\hspace{7.7cm}\includegraphics[height=1.2cm]{pictures/KI-white}%
+	\hfill\includegraphics[height=1.2cm]{pictures/Barntumorbanken}%
+}
+
+\author{
+	\vspace{-.6cm}
+	\faUser\ Maxime U. Garcia\\
+	\faGlobe\ \href{https://maxulysse.github.io/}{maxulysse.github.io}\\
+	\faGithub\ \href{https://github.com/MaxUlysse/}{@MaxUlysse}\\
+	\faTwitter\ \href{https://twitter.com/gau/}{@gau}\\
+	\\
+	\includegraphics[height=.7cm]{pictures/JOBIM2018-white}
+}
+
+\date{\vfill}
+
+\begin{document}
+
+{
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{pictures/SciLifelab-BlueSky2.jpg}}
+	\setbeamercolor{normal text}{fg = white, bg = white}
+	\maketitle
+}
+
+\end{document}
