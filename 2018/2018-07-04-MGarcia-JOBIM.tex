@@ -96,7 +96,6 @@
 	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{pictures/SciLifelab-BlueSky2.jpg}}
 	\setbeamercolor{normal text}{fg = white, bg = white}
 	\maketitle
-	\note{God morgon Marseille...}
 }
 
 \section{Science for Life Laboratory}
@@ -139,8 +138,6 @@
 	}
 \end{frame}
 
-\note{Science for Life Laboratory is a national center}
-
 \begin{frame}{National Genomics Infrastructure}
 	\begin{figure}
 		\includegraphics[height=.7cm]{pictures/NGI}
@@ -166,8 +163,6 @@
 
 \end{frame}
 
-\note{NGI is an sequencing infrastructure}
-
 \begin{frame}{National Bioinformatics Infrastructure Sweden}
 	\begin{figure}
 		\includegraphics[height=.7cm]{pictures/NBIS}
@@ -192,8 +187,6 @@
 
 \end{frame}
 
-\note{NBIS is a Bioinformatics support infrastructure, and as you can see they are located all over Sweden, except for the North which is pretty much empty}
-
 \section{Sarek}
 
 \begin{frame}{Sarek}
@@ -210,8 +203,6 @@
 	}
 \end{frame}
 
-\note{But in the North there is this National park called Sarek}
-
 \begin{frame}{The most dramatic and grandiose of all}
 	\begin{itemize}
 		\item Long, deep, narrow valleys and wild, turbulent water.
@@ -223,15 +214,11 @@
 	\hfill\href{http://www.nationalparksofsweden.se/choose-park---list/sarek-national-park/national-park-fact/}{Sarek National Park website}
 \end{frame}
 
-\note{This park is pretty wild and inaccessible, so it's like...}
-
 \begin{frame}{Where we're going we don't need roads}
 	\begin{figure}
 		\includegraphics[height=6.5cm]{pictures/OneDoesNotSimply-meme.png}
 	\end{figure}
 \end{frame}
-
-\note{...Mordor, and we found that such a landscape was a perfect metaphor for the genomic landscape we wanted to explore.}
 
 \begin{frame}{What is Sarek?}
 	\begin{figure}
@@ -256,8 +243,6 @@
 	\vfill
 \end{frame}
 
-\note{Sarek is a pipeline powered by Nextflow, developed at NGI with NBIS and BTB support}
-
 \section{Under the hood}
 
 \begin{frame}{Nextflow}
@@ -275,17 +260,6 @@
 	\end{itemize}
 	\vfill
 \end{frame}
-
-\note{Nextflow is a dataflow language
-
-where explicitly defined inputs and outputs connect operations
-
--> inherently parallel and can work well in large, decentralized systems.
-
-Helps in generating portable pipelines
-
-And also Shareable and reproducible pipelines with the help of containers
-}
 
 \begin{frame}{Singularity}
 	\begin{figure}
@@ -305,14 +279,6 @@ And also Shareable and reproducible pipelines with the help of containers
 	\end{itemize}
 \end{frame}
 
-\note{Singularity is a container engine
-
-Specific for HPC environnment
-
-Supported by Nextflow
-}
-
-
 \section{What's inside}
 
 \begin{frame}{Sarek exists in two flavors}
@@ -328,12 +294,6 @@ Supported by Nextflow
 		\includegraphics[height=1.5cm]{pictures/Sarek_somatic}
 	\end{center}
 	\end{frame}
-
-\note{
-Sarek germline for analyzing normal samples and
-
-Sarek somatic for analyzing tumor/normal pairs (with optionnal relapses)
-}
 
 \begin{frame}{Preprocessing}
 	\begin{figure}
@@ -355,27 +315,7 @@ Sarek somatic for analyzing tumor/normal pairs (with optionnal relapses)
 		\item Recalibrate with \mintinline{text}{GATK BaseRecalibrator}
 	\end{itemize}
 
-
 \end{frame}
-
-\note{\begin{itemize}
-\item Reads mapped to reference with bwa
-\begin{itemize}
-	\item To provide a common coordinate framework
-\end{itemize}
-\item Duplicates marked with picard MarkDuplicates
-\begin{itemize}
-	\item To identify read pairs duplicated from artifactual processes
-\end{itemize}
-\item Realign indels with GATK IndelRealigner
-\begin{itemize}
-	\item To facilitate somatic calling for T/N pair
-\end{itemize}
-\item Recalibrate with GATK BaseRecalibrator
-\begin{itemize}
-	\item To detect and correct errors in the base quality scores
-\end{itemize}
-\end{itemize}}
 
 \begin{frame}{Germline Variant Calling}
 	\begin{itemize}
@@ -393,10 +333,6 @@ Sarek somatic for analyzing tumor/normal pairs (with optionnal relapses)
 		\end{itemize}
 	\end{itemize}
 \end{frame}
-
-\note{Variant Calling tools for Germline analysis: HaplotypeCaller and Strelka2 for SNVs and small indels
-
-Manta for Structural Variants}
 
 \begin{frame}{Somatic Variant Calling}
 	\begin{itemize}
@@ -424,13 +360,6 @@ Manta for Structural Variants}
 	\end{itemize}
 \end{frame}
 
-\note{Variant Calling tools for Somatic analysis: MuTect2 (we're removing Mutect1), Freebayes and Strelka2 for SNVs and small indels
-
-Manta for Structural Variants
-
-ASCAT, and adding Control-FREEC for CNVs}
-
-
 \begin{frame}{SNV Calling overlap}
 	\begin{figure}
 		\includegraphics[height=4cm]{pictures/Sarek_venn_Calls.png}
@@ -445,12 +374,6 @@ ASCAT, and adding Control-FREEC for CNVs}
 	\small{Alioto TS et al. (2015) \aiDoi\ \url{https://doi.org/10.1038/ncomms10001}}
 \end{frame}
 
-\note{Here we are comparing the number and overlap of Somatic SNV calls for a WGS public medulloblastoma dataset
-
-We can see that MuTect1 does not add many true calls, so it was a good reason to finally remove it
-}
-
-
 \begin{frame}{Annotation}
 	\begin{itemize}
 		\item VEP and SnpEff
@@ -458,8 +381,6 @@ We can see that MuTect1 does not add many true calls, so it was a good reason to
 		\item \faDatabase\ ClinVar, COSMIC, dbSNP, GENCODE, gnomAD, polyphen, sift, etc.
 	\end{itemize}
 \end{frame}
-
-\note{Annotation is done with VEP and SnpEff, and we're also working on Prioritization}
 
 \begin{frame}{\faWrench\ Prioritization}
 	\begin{itemize}
@@ -480,8 +401,6 @@ We can see that MuTect1 does not add many true calls, so it was a good reason to
 	\end{itemize}
 \end{frame}
 
-\note{For prioritization we're feeding SnpEff output to VEP and analyzing the resulting annotated VCFs}
-
 \begin{frame}{Reports}
 	\begin{figure}
 		\includegraphics[height=6cm]{pictures/MultiQC_screenshot-2018-07-02.png}
@@ -489,15 +408,11 @@ We can see that MuTect1 does not add many true calls, so it was a good reason to
 	\end{figure}
 \end{frame}
 
-\note{We use also several QC tools and all reports are gathered within MultiQC into a single final QC report}
-
 \begin{frame}{Workflow}
 	\begin{figure}
 		\includegraphics[height=7cm]{pictures/Sarek_workflow_2}
 	\end{figure}
 \end{frame}
-
-\note{Just to conclude about what's under the hood}
 
 \section{What's next}
 
@@ -509,8 +424,6 @@ We can see that MuTect1 does not add many true calls, so it was a good reason to
 	\end{itemize}
 \end{frame}
 
-\note{Preprocessing is done with the whole genome and Variant calling only on the targeted regions}
-
 \begin{frame}{Reference genomes}
 	\begin{itemize}
 		\item GRCh37 and GRCh38
@@ -518,8 +431,6 @@ We can see that MuTect1 does not add many true calls, so it was a good reason to
 		\item Custom genome
 	\end{itemize}
 \end{frame}
-
-\note{Obviously GRCh37 and GRCh38, and it's possible to add your own custom genome of reference}
 
 \begin{frame}{Sarek at work}
 	\begin{itemize}
@@ -538,11 +449,6 @@ We can see that MuTect1 does not add many true calls, so it was a good reason to
 		\end{itemize}
 	\end{itemize}
 \end{frame}
-
-\note{Samples from the Swedish Childhood Tumor Biobank (article in preparation)
-The whole SweGen dataset
-Clinical samples within pilot project with Genomic Medicine Sweden initiative
-}
 
 \begin{frame}{\faWrench\ Preprint available at BioRxiv}
 
@@ -565,8 +471,6 @@ Clinical samples within pilot project with Genomic Medicine Sweden initiative
 	\aiDoi\ \url{https://doi.org/10.1101/316976}
 \end{frame}
 
-\note{article about the method}
-
 \section{nf-core}
 
 \begin{frame}{nf-core}
@@ -583,8 +487,6 @@ Clinical samples within pilot project with Genomic Medicine Sweden initiative
 		\item Conda environnment, Docker and Singularity container
 	\end{itemize}
 \end{frame}
-
-\note{nf-core is an international collaboration to develop, share and use Nextflow pipeline}
 
 \section{Acknowledgments}
 
@@ -605,8 +507,6 @@ Clinical samples within pilot project with Genomic Medicine Sweden initiative
 		\faGroup\ \url{https://gitter.im/nf-core/Lobby}
 	\end{itemize}
 \end{frame}
-
-\note{Come and talk with us}
 
 \begin{frame}{Acknowledgments}
 	\begin{figure}
@@ -653,8 +553,6 @@ Clinical samples within pilot project with Genomic Medicine Sweden initiative
 	\end{figure}
 \end{frame}
 
-\note{Thanks to everyone involved within Sarek and all my collaborators}
-
 {
 	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{pictures/SciLifelab-BlueSky.jpg}}
 	\setbeamercolor{normal text}{fg = white}
@@ -670,7 +568,5 @@ Clinical samples within pilot project with Genomic Medicine Sweden initiative
 	\faGlobe\ \url{https://maxulysse.github.io/jobim2018}
 	\end{frame}
 }
-
-\note{Any questions?}
 
 \end{document}
