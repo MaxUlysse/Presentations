@@ -1,0 +1,450 @@
+%!TEX program = xelatex
+
+\documentclass[usepdftitle=false]{beamer}
+
+% Good bibliography
+\RequirePackage[backend=biber]{biblatex}
+\addbibresource[datatype=bibtex]{biblio.bib}
+
+\RequirePackage{hyperref}
+
+\hypersetup{
+	pdftitle			= {Sarek, a portable workflow for WGS analysis of germline and somatic mutations},
+	pdfsubject		= {DNA-club 2018},
+	pdfkeywords		= {Somatic, Germline, Variations, Cancer, Workflow, Container, Reproducibility, Nextflow, Pipeline, Singularity, Docker, Genomics},
+	pdfauthor			= {Maxime U. Garcia},
+	pdfcreator		= {\LaTeX},
+	pdfproducer		= {XeTeX 3.14159265-2.6-0.99996}}
+
+% Icon Fonts
+\RequirePackage{academicons}
+\RequirePackage{fontawesome}
+
+% Correct the path when including svg pictures
+\RequirePackage{import}
+
+% For nice verbatim
+\RequirePackage{minted}
+\definecolor{LightGray}{HTML}{D3D3D3}
+\setmintedinline{bgcolor=LightGray}
+
+% To resize graphic and table
+\RequirePackage{graphics}
+
+% For captions
+\RequirePackage{caption}
+
+% Arrange theme
+\usetheme[
+	progressbar=frametitle,
+	sectionpage=none,
+	numbering=fraction
+]{metropolis}
+
+\makeatletter
+	\setlength{\metropolis@titleseparator@linewidth}{1pt}
+	\setlength{\metropolis@progressonsectionpage@linewidth}{2pt}
+	\setlength{\metropolis@progressinheadfoot@linewidth}{2pt}
+\makeatother
+
+% Color the progress:
+% - SciLifeLabGreen (#7FCB28) for SciLifeLab
+% - violet for KI
+\definecolor{SciLifeLabGreen}{HTML}{7FCB28}
+\setbeamercolor{progress bar}{fg=SciLifeLabGreen,bg=white}
+
+\newcommand{\ts}{\textsuperscript}
+
+\title{%
+	\vspace{-.8cm}%
+	Sarek
+}
+
+\subtitle{%
+	\normalsize{A portable workflow for WGS analysis\\of germline and somatic mutations}%
+	\vspace{-.4cm}%
+}
+
+\titlegraphic{
+	\hfill\includegraphics[height=.8cm]{pictures/SciLifeLab-white}%
+	\vspace{.3cm}%
+
+	\hfill\includegraphics[height=.8cm]{pictures/NGI-white}%
+	\vspace{.5cm}%
+
+	\hspace{7.7cm}\includegraphics[height=1.2cm]{pictures/KI-white}%
+	\hfill\includegraphics[height=1.2cm]{pictures/Barntumorbanken}%
+}
+
+\author{
+	\vspace{-.6cm}
+	\faUser\ Maxime U. Garcia\\
+	\faGlobe\ \href{https://maxulysse.github.io/}{maxulysse.github.io}\\
+	\faGithub\ \href{https://github.com/MaxUlysse/}{@MaxUlysse}\\
+	\faTwitter\ \href{https://twitter.com/gau/}{@gau}\\
+	\\
+	\includegraphics[height=.7cm]{pictures/DNAclub}
+}
+
+\date{\vfill}
+
+\begin{document}
+
+\section{Sarek}
+
+{
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{pictures/SciLifelab-BlueSky2.jpg}}
+	\setbeamercolor{normal text}{fg = white, bg = white}
+	\maketitle
+}
+
+\section{Sarek}
+
+\begin{frame}{Sarek}
+	\begin{figure}
+		\includegraphics[height=7cm]{pictures/Skierfe-summer.jpg}
+		\captionof*{figure}{Sarek, the National Park in Northen Sweden}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{The most dramatic and grandiose of all}
+	\begin{itemize}
+		\item Long, deep, narrow valleys and wild, turbulent water.
+		\item \textbf{A tortuous delta landscape.}
+		\item Completely lacking in comfortable accommodations.
+		\item Sarek is one of Sweden’s \textbf{most inaccessible national parks}
+		\item \textbf{There are no roads leading up to the national park}.
+	\end{itemize}
+	\hfill\href{http://www.nationalparksofsweden.se/choose-park---list/sarek-national-park/national-park-fact/}{Sarek National Park website}
+\end{frame}
+
+\begin{frame}{Where we're going we don't need roads}
+	\begin{figure}
+		\includegraphics[height=6.5cm]{pictures/OneDoesNotSimply-meme.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{What is Sarek?}
+	\begin{figure}
+		\includegraphics[height=1cm]{pictures/Sarek_no_border}
+		\captionof*{figure}{\faGlobe\ \url{http://sarek.scilifelab.se/}}
+	\end{figure}
+	\begin{itemize}
+		\pause
+		\item Nextflow pipeline
+		\item<3-> Developed at NGI
+		\item<4-> In collaboration with NBIS
+		\item<5-> Support from The Swedish Childhood Tumor Biobank
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[height=1cm]{pictures/blank}<-2>
+		\includegraphics[height=1cm]{pictures/NGI}<3->
+		\only<3->{\hfill}
+		\includegraphics[height=1cm]{pictures/Barntumorbanken}<5->
+		\only<4->{\hfill}
+		\includegraphics[height=1cm]{pictures/NBIS}<4->
+	\end{figure}
+	\vfill
+\end{frame}
+
+\section{Under the hood}
+
+\begin{frame}{Nextflow}
+	\begin{figure}
+		\includegraphics[height=1cm]{pictures/nextflow.png}
+		\captionof*{figure}{\faGlobe\ \url{https://www.nextflow.io/}}
+		\includegraphics[height=1cm]{pictures/blank}
+	\end{figure}
+	\begin{itemize}
+		\item Data-driven workflow language
+		\pause
+		\item Portable (executable on multiple platforms)
+		\pause
+		\item Shareable and reproducible (with containers)
+	\end{itemize}
+	\vfill
+\end{frame}
+
+\begin{frame}{Singularity}
+	\begin{figure}
+		\includegraphics[height=1cm]{pictures/Singularity_logo}
+		\captionof*{figure}{\faGlobe\ \url{https://singularity.lbl.gov/}}
+		\includegraphics[height=1cm]{pictures/blank}
+	\end{figure}
+	\begin{itemize}
+		\item Docker-like container engine
+		\item Specific for HPC environnment
+		\pause
+		\item Without the root user security problem
+		\pause
+		\item Supported by Nextflow
+		\pause
+		\item Can pull containers from Docker-hub
+	\end{itemize}
+\end{frame}
+
+\section{What's inside}
+
+\begin{frame}{Sarek exists in multiple flavors}
+	\begin{figure}
+		\includegraphics[height=1.5cm]{pictures/Sarek}
+	\end{figure}
+	\vfill
+	\pause
+	\begin{center}
+		\includegraphics[height=1.5cm]{pictures/Sarek_germline}
+		\hfill
+		\pause
+		\includegraphics[height=1.5cm]{pictures/Sarek_somatic}
+	\end{center}
+	\pause
+	\begin{center}
+		\includegraphics[height=1.5cm]{pictures/Sarek_exome}
+	\end{center}
+	\end{frame}
+
+\begin{frame}{Preprocessing}
+	\begin{figure}
+		\includegraphics[height=1cm]{pictures/GATKBP}
+		\captionof*{figure}{\faGlobe\ \url{https://software.broadinstitute.org/gatk/best-practices/}}
+	\end{figure}
+	Based on GATK Best Practices (GATK 4.0)
+
+	\pause
+
+	\begin{itemize}
+		\item Reads mapped to reference genome with \mintinline{text}{bwa}
+		\pause
+		\item Duplicates marked with \mintinline{text}{picard MarkDuplicates}
+		\pause
+		\item Recalibrate with \mintinline{text}{GATK BaseRecalibrator}
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Germline Variant Calling}
+	\begin{itemize}
+		\item SNVs and small indels:
+		\pause
+	\begin{itemize}
+			\item HaplotypeCaller
+			\item Strelka2
+		\end{itemize}
+		\pause
+		\item Structural variants:
+		\pause
+		\begin{itemize}
+			\item Manta
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Somatic Variant Calling}
+	\begin{itemize}
+		\item SNVs and small indels:
+		\pause
+		\begin{itemize}
+			\item MuTect2
+			\item Freebayes
+			\item Strelka2
+		\end{itemize}
+		\pause
+		\item Structural variants:
+		\pause
+		\begin{itemize}
+			\item Manta
+		\end{itemize}
+		\pause
+		\item Sample heterogeneity, ploidy and CNVs:
+		\pause
+		\begin{itemize}
+			\item ASCAT
+			\item Control-FREEC (\faWrench\ adding)
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Annotation}
+	\begin{itemize}
+		\item VEP and SnpEff
+		\pause
+		\item \faDatabase\ ClinVar, COSMIC, dbSNP, GENCODE, gnomAD, polyphen, sift, etc.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{\faWrench\ Prioritization}
+	\begin{itemize}
+		\item	First step towards clinical use
+		\pause
+		\item	Rank scores are computed for all variants
+		\begin{itemize}
+			\item	COSMIC, ClinVar, SweFreq and MSK-IMPACT (cancerhotspots.org)
+		\end{itemize}
+		\pause
+		\item	Findings are ranked in three tiers
+		\pause
+		\begin{itemize}
+			\item	1\ts{st} tier: well known, high-impact variants
+			\item	2\ts{nd} tier: variants in known cancer-related genes
+			\item	3\ts{rd} tier: the remaining variants
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Reports}
+	\begin{figure}
+		\includegraphics[height=6cm]{pictures/MultiQC_screenshot-2018-07-02.png}
+		\captionof*{figure}{\faGlobe\ \url{http://multiqc.info/}}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Workflow}
+	\begin{figure}
+		\includegraphics[height=7cm]{pictures/Sarek_workflow_3}
+	\end{figure}
+\end{frame}
+
+\section{What's next}
+
+\begin{frame}{Reference genomes}
+	\begin{itemize}
+		\item GRCh37 and GRCh38
+		\pause
+		\item Custom genome
+		\pause
+		\item \faWrench\ Other organisms
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{More AWS testing}
+	\begin{figure}
+		\includegraphics[height=3cm]{pictures/AWS}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Production ready}
+	\begin{figure}
+		\includegraphics[height=3cm]{pictures/X-All-The-Y.jpg}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Sarek at work}
+	\begin{itemize}
+		\item	50 tumor/normal pairs with GRCh37 reference
+		\pause
+		\item	90 tumor/normal pairs (with some relapse) with GRCh38 reference
+		\pause
+		\item	The whole SweGen dataset with GRCh38 reference
+		\begin{itemize}
+			\item	1 000 samples in germline settings
+		\end{itemize}
+		\pause
+		\item	4 clinical samples
+		\begin{itemize}
+			\item	more coming with Genomic Medicine Sweden initiative
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{\faWrench\ Preprint available at BioRxiv}
+
+	\textbf{Sarek: A portable workflow for whole-genome sequencing analysis of germline and somatic variants}
+
+	\small{Maxime Garcia,
+	Szilveszter Juhos,
+	Malin Larsson,
+	Pall I Olason,
+	Marcel Martin,
+	Jesper Eisfeldt,
+	Sebastian DiLorenzo,
+	Johanna Sandgren,
+	Teresita Diaz de Ståhl,
+	Valtteri Wirta,
+	Monica Nistèr,
+	Björn Nystedt,
+	Max Käller}
+
+	\aiDoi\ \url{https://doi.org/10.1101/316976}
+\end{frame}
+
+\section{Acknowledgments}
+
+\begin{frame}{Get involved!}
+	\begin{itemize}
+		\item Our code is hosted on Github
+
+		\faGithub\ \url{https://github.com/SciLifeLab/Sarek}
+
+		\faGithub\ \url{https://github.com/nf-core}
+	\end{itemize}
+	\pause
+	\begin{itemize}
+		\item We have gitter channels
+
+		\faGroup\ \url{https://gitter.im/SciLifeLab/Sarek}
+
+		\faGroup\ \url{https://gitter.im/nf-core/Lobby}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Acknowledgments}
+	\begin{figure}
+		\includegraphics[height=.6cm]{pictures/Barncancerfonden}%
+		\hfill%
+		\includegraphics[height=.6cm]{pictures/KI}%
+		\hfill%
+		\includegraphics[height=.6cm]{pictures/Barntumorbanken}%
+		\hfill%
+		\includegraphics[height=.6cm]{pictures/SciLifeLab}%
+		\hfill%
+		\includegraphics[height=.6cm]{pictures/uppmax.png}%
+	\end{figure}
+	\begin{table}
+		\resizebox{\textwidth}{!}{%
+		\begin{tabular}{llllll}
+		\textbf{Barntumörbanken}	&	Elisa Basmaci								&	\textbf{NGI}	&	Johannes Alneberg						&	\textbf{NBIS}	&	Sebastian DiLorenzo	\\
+															&	Szilveszter Juhos						&								&	Anandashankar Anil					&								&	Malin Larsson	\\
+															&	Gustaf Ljungman							&								&	Franziska Bonath						&								&	Marcel Martin	\\
+															&	Monica Nistèr								&								&	Orlando Contreras‐López			&								&	Markus Mayrhofer	\\
+															&	Gabriela Prochazka					&								&	Phil Ewels									&								&	Björn Nystedt	\\
+															&	Johanna Sandgren						&								&	Sofia Haglund								&								&	Markus Ringnér	\\
+															&	Teresita Díaz De Ståhl			&								&	Max Käller									&								&	Pall I Olason	\\
+															&	Katarzyna Zielinska-Chomej	&								&	Anna Konrad									&								&	Jonas Söderberg	\\
+															&															&								&	Pär Lundin									&								&	\\
+		\textbf{Grupp Nistèr}	&	Saad Alqahtani			&														&	Remi-Andre Olsen						&	\textbf{Clinical Genomics}	&	Kenny Billiau\\
+													&	Min Guo							&														&	Senthilkumar Panneerselvam	&															&	Hassan Foroughi Asl\\
+													&	Daniel Hägerstrand	&														&	Fanny Taborsak							&															&	Valtteri Wirta\\
+													&	Anna Hedrén					&														&	Chuan Wang									&															&	\\
+													&	Martin Proks				&									&							&	\textbf{Nextflow folks}	&	Paolo Di Tommaso	\\
+													&	Rong Yu							&									&							&													&	Sven Fillinger	\\
+													&	Jian Zhao						&	\textbf{Clinical Genetics}		&	Jesper Eisfeldt			&		&	Alexander Peltzer	\\
+		\end{tabular}}
+	\end{table}
+	\begin{figure}
+		\includegraphics[height=.6cm]{pictures/NGI}%
+		\hfill%
+		\includegraphics[height=.6cm]{pictures/NBIS}%
+		\hfill%
+		\includegraphics[height=.6cm]{pictures/nextflow.png}%
+		\hfill%
+		\includegraphics[height=.6cm]{pictures/nf-core-logo}%
+	\end{figure}
+\end{frame}
+
+{
+	\usebackgroundtemplate{\includegraphics[height=\paperheight]{pictures/Sarek_discovery.jpg}}
+	\setbeamercolor{normal text}{fg = white}
+	\setbeamercolor{frametitle}{fg = white, bg = black!80}
+	\usebeamercolor[fg]{normal text}
+	\section{Questions}
+	\begin{frame}[plain]{Any questions?}
+	\vspace{-6cm}
+	\faGlobe\ \url{http://sarek.scilifelab.se/}
+
+	\faGithub\ \url{https://github.com/SciLifeLab/Sarek}
+
+	\faGlobe\ \url{https://maxulysse.github.io/dnaclub2018}
+	\end{frame}
+}
+
+\end{document}
