@@ -1,0 +1,607 @@
+%!TEX program = xelatex
+
+\documentclass[usepdftitle=false]{beamer}
+
+% Good bibliography
+\RequirePackage[backend=biber]{biblatex}
+\addbibresource[datatype=bibtex]{biblio.bib}
+
+\RequirePackage{hyperref}
+
+\hypersetup{
+	pdftitle			= {Updates on bioinformatics development including Sarek pipeline},
+	pdfsubject		= {Sarek, rnafusion, munin},
+	pdfkeywords		= {Bioinformatics, Cancer, Container, Docker, Exome, Fusion, Genomics, Germline, Nextflow, Pipeline, Reproducibility, RNA, Singularity, Somatic, Variations, Workflow},
+	pdfauthor			= {Maxime U. Garcia},
+	pdfcreator		= {\LaTeX},
+	pdfproducer		= {XeTeX 3.14159265-2.6-0.99996}}
+
+% Icon Fonts
+\RequirePackage{academicons}
+\RequirePackage{fontawesome5}
+
+% Correct the path when including svg pictures
+\RequirePackage{import}
+
+% For nice verbatim
+\RequirePackage{minted}
+\definecolor{LightGray}{HTML}{D3D3D3}
+\setmintedinline{bgcolor=LightGray}
+
+% Nice and fancy underlines
+\RequirePackage[normalem]{ulem}
+\RequirePackage{contour}
+\renewcommand{\ULdepth}{1.8pt}\contourlength{0.55pt}
+\newcommand{\myuline}[1]{\uline{\contour{black!2}{#1}}}
+\newcommand{\myurl}[1]{\myuline{\url{{#1}}}}
+
+% To resize graphic and table
+\RequirePackage{graphics}
+
+% For captions
+\RequirePackage{caption}
+
+% Arrange theme
+\usetheme[
+	progressbar=frametitle,
+	sectionpage=none,
+	numbering=fraction
+]{metropolis}
+
+\makeatletter
+	\setlength{\metropolis@titleseparator@linewidth}{1pt}
+	\setlength{\metropolis@progressonsectionpage@linewidth}{2pt}
+	\setlength{\metropolis@progressinheadfoot@linewidth}{2pt}
+\makeatother
+
+% Color the progress:
+% - SciLifeLabGreen (#7FCB28) for SciLifeLab
+% - KIplum for KI (#8C0058)
+\definecolor{SciLifeLabGreen}{HTML}{7FCB28}
+\definecolor{KIplum}{HTML}{8C0058}
+\setbeamercolor{progress bar}{fg=SciLifeLabGreen,bg=white}
+\setbeamercolor{progress bar in head/foot}{fg=SciLifeLabGreen,bg=white}
+
+\newcommand{\ts}{\textsuperscript}
+
+\title{%
+	\vspace{-3.2cm}%
+	Updates on bioinformatics development
+}
+
+\subtitle{%
+	including Sarek pipeline
+}
+
+\titlegraphic{%
+	\vspace{6cm}%
+
+	\hspace{1cm}%
+	\includegraphics[height=.9cm]{pictures/KI-horizontal-white}%
+	\hspace{2cm}%
+	\includegraphics[height=.9cm]{pictures/Barntumörbanken-white}%
+
+	\vspace{.5cm}%
+
+	\includegraphics[height=.9cm]{pictures/SciLifeLab-white}%
+	\hfill%
+	\includegraphics[height=.9cm]{pictures/NGI-white}%
+	\hfill%
+	\includegraphics[height=.9cm]{pictures/NBIS-green}%
+}
+
+\author{
+	\vspace{-.6cm}
+	\faUser\ Maxime U. Garcia\\
+	\faGlobe\ \href{https://maxulysse.github.io/}{maxulysse.github.io}\\
+	\faGithub\ \href{https://github.com/MaxUlysse/}{@MaxUlysse}\\
+	\faTwitter\ \href{https://twitter.com/gau/}{@gau}\\
+}
+
+\date{
+	2019-02-08
+}
+
+\begin{document}
+
+\section{Review}
+
+{
+	\usebackgroundtemplate{\includegraphics[width=\paperwidth]{pictures/Stockholm-by-night.jpg}}
+	\setbeamercolor{normal text}{fg = white, bg = white}
+	\maketitle
+}
+
+\section{Plan}
+\begin{frame}{Introduction}
+	\begin{itemize}
+		\item Bioinformatics at BTB
+		\pause
+		\item Sarek pipeline
+		\pause
+		\item rnafusion pipeline
+		\pause
+		\item munin server
+	\end{itemize}
+\end{frame}
+
+\section{Bioinformatics}
+\begin{frame}{Why do we need bioinformaticians?}
+	\begin{figure}
+		\includegraphics[height=1cm]{pictures/Barntumörbanken}
+	\end{figure}
+	\begin{itemize}
+		\item Keep up to date current methods/tools
+		\pause
+		\item Improve/automatize methods/tools
+		\pause
+		\item Use methods/tools
+		\pause
+		\item Develop new methods/tools
+		\pause
+		\item Maintain current methods/tools
+		\pause
+		\item Methods/tools that are reproducible
+		\pause
+		\item Provide solutions
+	\end{itemize}
+\end{frame}
+
+\section{Sarek}
+\begin{frame}{What is Sarek?}
+	\begin{figure}
+		\includegraphics[height=1.5cm]{pictures/Sarek_no_border}
+		\captionof*{figure}{\faGlobe\ \myurl{http://sarek.scilifelab.se/}}
+	\end{figure}
+	\begin{itemize}
+		\item Analysis germline and somatic workflow
+		\item<2-> Whole genome or targeted sequencing
+		\item<3-> Developed with NGI and NBIS
+		\item<4-> Support from The Swedish Childhood Tumor Biobank
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[height=.8cm]{pictures/blank}<-2>
+		\includegraphics[height=.8cm]{pictures/NGI}<3->
+		\only<4->{\hfill}
+		\includegraphics[height=.8cm]{pictures/Barntumörbanken}<4->
+		\only<3->{\hfill}
+		\includegraphics[height=.8cm]{pictures/NBIS-orange}<3->
+	\end{figure}
+	\vfill
+\end{frame}
+
+\begin{frame}{Powered by}
+	\begin{figure}
+		\includegraphics[height=1cm]{pictures/nextflow.png}
+		\captionof*{figure}{\faGlobe\ \myurl{https://www.nextflow.io/}}
+		\only<1>{\captionof*{figure}{ }}
+		\only<2>{\captionof*{figure}{Data-driven workflow language}}
+	\end{figure}
+	\vfill
+	\begin{figure}
+		\includegraphics[height=1.5cm]{pictures/Singularity}
+		\captionof*{figure}{\faGlobe\ \myurl{https://www.sylabs.io/singularity/}}
+		\only<1>{\captionof*{figure}{ }}
+		\only<2>{\captionof*{figure}{HPC specific container engine}}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Conda}
+	\begin{figure}
+		\includegraphics[height=1cm]{pictures/bioconda}
+		\captionof*{figure}{\faGlobe\ \myurl{https://bioconda.github.io/}}
+	\end{figure}
+	\begin{itemize}
+		\item Virtual environment management system
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sarek exists in multiple flavors}
+	\begin{figure}
+		\includegraphics[height=1.5cm]{pictures/Sarek}
+	\end{figure}
+	\pause
+	\begin{figure}
+		\includegraphics[height=1.5cm]{pictures/Sarek_exome}
+	\end{figure}
+	\vfill
+	\pause
+	\begin{center}
+		\includegraphics[height=1.5cm]{pictures/Sarek_germline}
+		\hfill
+		\includegraphics[height=1.5cm]{pictures/Sarek_somatic}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Data and files workflow}
+	\begin{figure}
+		\includegraphics[height=7cm]{pictures/Sarek_workflow_2-3}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{References Genomes}
+	\begin{figure}
+		\Huge AWS iGenomes
+		\includegraphics[height=1em]{pictures/AmazonWebservices}
+		\captionof*{figure}{\faGlobe\ \myurl{https://ewels.github.io/AWS-iGenomes/}}
+	\end{figure}
+	\begin{itemize}
+		\item Human \mintinline{text}{GRCh37} from the GATK Resource Bundle
+		\item Human \mintinline{text}{GRCh38} from the GATK Resource Bundle
+		\pause
+		\item Dog \mintinline{text}{CanFam3.1} \faWrench
+		\item Mouse \mintinline{text}{GRCm38} \faWrench
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Preprocessing}
+	\begin{figure}
+		\includegraphics[height=2cm]{pictures/GATKBP}
+		\captionof*{figure}{\faGlobe\ \myurl{https://software.broadinstitute.org/gatk/best-practices/}}
+	\end{figure}
+	Based on GATK Best Practices (GATK 4.0)
+	\pause
+
+	\begin{itemize}
+		\item Reads mapped to reference genome with \mintinline{text}{bwa mem}
+		\pause
+		\begin{itemize}
+			\item FASTQs or BAMs \faWrench
+		\end{itemize}
+		\pause
+		\item Duplicates marked with \mintinline{text}{picard MarkDuplicates}
+		\pause
+		\item Recalibrate with \mintinline{text}{GATK BaseRecalibrator}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Variant Calling}
+	\begin{itemize}
+		\item SNVs and small indels:
+		\pause
+	\begin{itemize}
+			\item Freebayes \includegraphics[height=1em]{pictures/Sarek_somatic-logo}
+			\item HaplotypeCaller \includegraphics[height=1em]{pictures/Sarek_germline-logo}
+			\item MuTect2  \includegraphics[height=1em]{pictures/Sarek_somatic-logo}
+			\item Strelka2  \includegraphics[height=1em]{pictures/Sarek_germline-logo}/\includegraphics[height=1em]{pictures/Sarek_somatic-logo}
+		\end{itemize}
+		\pause
+		\item Structural variants:
+		\pause
+		\begin{itemize}
+			\item Manta \includegraphics[height=1em]{pictures/Sarek_germline-logo}/\includegraphics[height=1em]{pictures/Sarek_somatic-logo}
+		\end{itemize}
+		\item Sample heterogeneity, ploidy and CNVs:
+		\pause
+		\begin{itemize}
+			\item ASCAT  \includegraphics[height=1em]{pictures/Sarek_somatic-logo}
+			\item Control-FREEC \faWrench\  \includegraphics[height=1em]{pictures/Sarek_somatic-logo}
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Annotation}
+	\begin{itemize}
+		\item VEP and SnpEff
+		\item \faDatabase\ ClinVar, COSMIC, dbSNP, GENCODE, gnomAD, polyphen, sift, etc.
+		\pause
+		\item Possibility to use cache directories
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Prioritization}
+	What we need
+	\begin{itemize}
+		\item<1-> Adapt settings where necessary, and ensure they give good results
+		\item<2-> Coherent overview to allow critical assessment of sequence and variant quality
+		\item<3-> Tables of variants with probable relevance for the disease
+	\end{itemize}
+	\only<1->{
+		\vfill
+		\hfill\mintinline{text}{Markus Mayrhofer}
+	}
+\end{frame}
+
+\begin{frame}{Prioritization with pathfindr}
+	Our solution
+	\begin{itemize}
+		\item Parse all results into R environment
+		\pause
+		\item Rank variants based on evidence for being a driver mutation
+		\pause
+		\item Visualize in portable html report for easy browsing
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Variant intepretation}
+	Scoring based on VEP + custom annotations
+	\begin{itemize}
+		\item Noncoding impact
+		\begin{itemize}
+			\item TFBS
+			\item regulatory
+			\item conserved sequence
+		\end{itemize}
+		\pause
+		\item Coding impact
+		\begin{itemize}
+			\item SIFT/Polyphen
+			\item VEP impact
+		\end{itemize}
+		\pause
+		\item COSMIC
+		\begin{itemize}
+			\item Cancer census genes
+			\item High impact in TSG
+		\end{itemize}
+		\pause
+		\item MSK-impact
+		\begin{itemize}
+			\item known hotspot
+			\item adjacent to known hotspot(s)
+		\end{itemize}
+		\pause
+		\item CLINVAR
+		\begin{itemize}
+			\item pathogenic or risk
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Final results}
+	\begin{itemize}
+		\item Scores are generated for
+		\begin{itemize}
+			\item snvs/indels
+			\item copy number alteration
+			\item structural alteration
+		\end{itemize}
+		\pause
+		\item All for both somatic and germline variants
+		\item Displayed as ranked tables
+		\begin{itemize}
+			\item All information from VCF files included
+		\end{itemize}
+		\pause
+		\item Additional annotation
+		\begin{itemize}
+			\item Concomitant LOH marked
+			\item Swegen, TOPMED allele ratio
+		\end{itemize}
+		\pause
+		\item Visualization of all data
+		\begin{itemize}
+			\item Genome- and chromosome-wide figures
+			\item Self-contained HTML report files with all tables and figures
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Tables and visualization}
+	\begin{figure}
+		\only<1>{
+			\includegraphics[height=4cm]{pictures/pathfindr_SNV_Table.png}
+			\hspace{1cm}
+			\includegraphics[height=4cm]{pictures/pathfindr_SNV_Visualization.png}
+			\captionof*{figure}{SNVs, Indels}
+		}
+		\only<2>{
+			\includegraphics[height=4cm]{pictures/pathfindr_CNV_Table.png}
+			\hspace{1cm}
+			\includegraphics[height=4cm]{pictures/pathfindr_CNV_Visualization.png}
+			\captionof*{figure}{Copy number}
+		}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{BRAF-KIAA1549}
+	\begin{figure}
+		\only<1>{
+			\includegraphics[height=5cm]{pictures/BRAF-KIAA1549_01.png}
+			\captionof*{figure}{}
+		}
+		\only<2>{
+			\includegraphics[height=5cm]{pictures/BRAF-KIAA1549_02.png}
+			\captionof*{figure}{}
+		}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{PIK3CA}
+	\begin{figure}
+			\includegraphics[height=5cm]{pictures/PIK3CA.png}
+			\captionof*{figure}{}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Sarek at work}
+	\begin{itemize}
+		\item	50 tumor/normal pairs with GRCh37 reference
+		\pause
+		\item	90 tumor/normal pairs (with some relapse) with GRCh38 reference
+		\pause
+		\item	The whole SweGen dataset with GRCh38 reference
+		\begin{itemize}
+			\item	1 000 samples in germline settings
+		\end{itemize}
+		\pause
+		\item	Clinical samples with Genomic Medicine Sweden initiative
+		\pause
+		\item	Used at NGI
+		\begin{itemize}
+			\item	200 samples
+			\item	testing it in production
+			\item	plans for validation
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Preprocessing time}
+	\begin{figure}
+		\only<1>{
+			\includegraphics[height=6cm]{pictures/Sarek_preprocessing_time_2-2_UPPMAX}
+			\captionof*{figure}{On a research settings\\On UPPMAX secure cluster Bianca}
+		}
+		\only<2>{
+			\includegraphics[height=6cm]{pictures/Sarek_preprocessing_time_2-2_munin}
+			\captionof*{figure}{On a clinical settings\\On our own secure server munin}
+		}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{AWS}
+	\begin{figure}
+		\includegraphics[height=1.5cm]{pictures/AWS}
+		\captionof*{figure}{\faGlobe\ \myurl{https://aws.amazon.com/}}
+	\end{figure}
+	\begin{itemize}
+		\item<2-> Improved AWS usage
+	\end{itemize}
+	\only<1->{
+		\vfill
+		\hfill\mintinline{text}{Johannes Alneberg}
+	}
+\end{frame}
+
+\begin{frame}{QC reports}
+	\begin{figure}
+		\includegraphics[height=6cm]{pictures/MultiQC_screenshot-2018-07-02.png}
+		\captionof*{figure}{\faGlobe\ \myurl{http://multiqc.info/}}
+	\end{figure}
+\end{frame}
+
+\section{rnafusion}
+\begin{frame}{The rnafusion pipeline}
+	\begin{figure}
+		\includegraphics[height=1.5cm]{pictures/rnafusion_logo}
+		\captionof*{figure}{\faGlobe\ \myurl{https://github.com/nf-core/rnafusion/}}
+	\end{figure}
+	\begin{itemize}
+		\item RNA-fusions detection, filtering and visualization pipeline
+		\item<2-> Developed with NGI
+		\item<3-> Support from The Swedish Childhood Tumor Biobank
+	\end{itemize}
+	\begin{figure}
+		\includegraphics[height=.8cm]{pictures/blank}<-1>
+		\includegraphics[height=.8cm]{pictures/NGI}<2->
+		\only<2->{\hfill}
+		\includegraphics[height=.8cm]{pictures/Barntumörbanken}<3->
+	\end{figure}
+	\vfill
+	\only<1->{
+		\vfill
+		\hfill\mintinline{text}{Martin Proks}
+	}
+\end{frame}
+
+\begin{frame}{Tools used}
+	\begin{itemize}
+		\item Pipeline
+		\begin{itemize}
+			\item fusioncatcher
+			\item STAR-Fusion
+			\item Ericscript
+			\item Pizzly
+			\item Squid
+		\end{itemize}
+		\item Visualization
+		\begin{itemize}
+			\item Fusion Inspector
+		\end{itemize}
+		\item Fusion database
+		\begin{itemize}
+			\item FusionGDB
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Results}
+	\begin{figure}
+		\includegraphics[height=6cm]{pictures/rnafusion_example.png}
+		\captionof*{figure}{rnafusion results page}
+	\end{figure}
+\end{frame}
+
+\section{munin}
+
+\begin{frame}{munin}
+	\begin{figure}
+		\only<1>{
+			\includegraphics[height=6cm]{pictures/CMM_server_room.jpg}
+			\captionof*{figure}{The CMM server room}
+		}
+		\only<2>{
+			\includegraphics[height=6cm]{pictures/munin.jpg}
+			\captionof*{figure}{munin}
+		}
+	\end{figure}
+\end{frame}
+
+\section{Acknowledgments}
+
+\begin{frame}{Acknowledgments}
+	\begin{figure}
+		\includegraphics[height=.6cm]{pictures/Barncancerfonden}%
+		\hfill%
+		\includegraphics[height=.6cm]{pictures/KI-horizontal}%
+		\hfill%
+		\includegraphics[height=.6cm]{pictures/Barntumörbanken}%
+		\hfill%
+		\includegraphics[height=.6cm]{pictures/SciLifeLab}%
+	\end{figure}
+	\begin{table}
+		\resizebox{\textwidth}{!}{%
+		\begin{tabular}{llllll}
+		\textbf{Barntumörbanken}	&	Elisa Basmaci								&	\textbf{NGI}	&	Johannes Alneberg						&	\textbf{NBIS}	&	Sebastian DiLorenzo	\\
+															&	Szilveszter Juhos						&								&	Anandashankar Anil					&								&	Malin Larsson	\\
+															&	Gustaf Ljungman							&								&	Franziska Bonath						&								&	Marcel Martin	\\
+															&	Monica Nistèr								&								&	Orlando Contreras‐López			&								&	Markus Mayrhofer	\\
+															&	Gabriela Prochazka					&								&	Phil Ewels									&								&	Björn Nystedt	\\
+															&	Johanna Sandgren						&								&	Sofia Haglund								&								&	Markus Ringnér	\\
+															&	Teresita Díaz De Ståhl			&								&	Max Käller									&								&	Pall I Olason	\\
+															&	Katarzyna Zielinska-Chomej	&								&	Anna Konrad									&								&	Jonas Söderberg	\\
+															&															&								&	Pär Lundin									&								&	\\
+		\textbf{Grupp Nistèr}	&	Saad Alqahtani			&														&	Remi-Andre Olsen						&	\textbf{Clinical Genomics}	&	Kenny Billiau\\
+													&	Min Guo							&														&	Senthilkumar Panneerselvam	&															&	Hassan Foroughi Asl\\
+													&	Daniel Hägerstrand	&														&	Fanny Taborsak							&															&	Valtteri Wirta\\
+													&	Anna Hedrén					&														&	Chuan Wang									&															&	\\
+													&	Martin Proks				&									&							&	\textbf{Nextflow folks}	&	Paolo Di Tommaso	\\
+													&	Rong Yu							&									&							&													&	Sven Fillinger	\\
+													&	Jian Zhao						&	\textbf{Clinical Genetics}		&	Jesper Eisfeldt			&		&	Alexander Peltzer	\\
+		\end{tabular}}
+	\end{table}
+	\begin{figure}
+		\includegraphics[height=.5cm]{pictures/NGI}%
+		\hfill%
+		\includegraphics[height=.5cm]{pictures/NBIS-orange}%
+		\hfill%
+		\includegraphics[height=.5cm]{pictures/nextflow.png}%
+		\hfill%
+		\includegraphics[height=.5cm]{pictures/nf-core}%
+		\hfill%
+		\includegraphics[height=.5cm]{pictures/uppmax.png}%
+	\end{figure}
+\end{frame}
+
+{
+	\usebackgroundtemplate{\includegraphics[height=\paperheight]{pictures/Stadshuset.jpg}}
+	\setbeamercolor{normal text}{fg = white}
+	\setbeamercolor{frametitle}{fg = white, bg = black!80}
+	\usebeamercolor[fg]{normal text}
+	\section{Questions}
+	\begin{frame}[plain]{Any questions?}
+		\begin{itemize}
+			\item[\faGithub] \url{https://github.com/SciLifeLab/Sarek/}
+			\item[\faGitter] \url{https://gitter.im/SciLifeLab/Sarek/}
+			\item[\faGlobe] \url{http://sarek.scilifelab.se/}
+		\end{itemize}
+		\vspace{3.5cm}
+		\begin{itemize}
+			\item[\faGithub] \url{https://github.com/nf-core/rnafusion/}
+			\item[\faSlack] \url{https://nfcore.slack.com/}
+			\item[\faGlobe] \url{https://nf-co.re/}
+		\end{itemize}
+	\end{frame}
+}
+
+\end{document}
